@@ -7,7 +7,7 @@ class CreatePermittedRoutes < ActiveRecord::Migration[7.1]
       t.string :destination_iata, null: false
       t.boolean :direct, null: false, default: true
       t.string :origin_iata, null: false
-      t.text :transfer_iata_codes, null: false, default: '{}'
+      t.string :transfer_iata_codes, null: false, array: true, default: []
 
       t.timestamps
     end
