@@ -15,7 +15,7 @@ RSpec.describe FlightSearcher, type: :service do
     end
 
     let(:searcher) { FlightSearcher.new }
-    subject { searcher.search(params)[0].slice(:departure_time, :arrival_time) }
+    subject { searcher.search(params) }
 
     let!(:permitted_route) { create(:permitted_route) }
 
@@ -23,7 +23,7 @@ RSpec.describe FlightSearcher, type: :service do
       let!(:segment) { create(:segment) }
 
       it 'returns direct flight paths' do
-        expect(subject).to eq({
+        expect(subject[0].slice(:departure_time, :arrival_time)).to eq({
                                 departure_time: '2024-01-01 05:20:00'.to_datetime,
                                 arrival_time: '2024-01-01 15:20:00'.to_datetime
                               })
@@ -43,7 +43,7 @@ RSpec.describe FlightSearcher, type: :service do
         end
 
         it 'returns flight paths with connections' do
-          expect(subject).to eq({
+          expect(subject[0].slice(:departure_time, :arrival_time)).to eq({
                                   departure_time: '2024-01-01 05:20:00'.to_datetime,
                                   arrival_time: '2024-01-02 10:20:00'.to_datetime
                                 })
@@ -57,7 +57,7 @@ RSpec.describe FlightSearcher, type: :service do
         end
 
         it 'returns empty list of flight paths' do
-          expect(searcher.search(params)).to eq([])
+          expect(subject).to eq([])
         end
       end
     end
