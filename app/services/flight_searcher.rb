@@ -18,7 +18,7 @@ class FlightSearcher
 
     routes = find_routes(params, options)
     routes.map do |route|
-      path_information(route)
+      route_information(route)
     end
   end
 
@@ -81,14 +81,14 @@ class FlightSearcher
     routes
   end
 
-  def path_information(path)
+  def route_information(route)
     {
-      origin_iata: path[0].origin_iata,
-      destination_iata: path[-1].destination_iata,
-      departure_time: path[0].std,
-      arrival_time: path[-1].sta,
+      origin_iata: route[0].origin_iata,
+      destination_iata: route[-1].destination_iata,
+      departure_time: route[0].std,
+      arrival_time: route[-1].sta,
       segments:
-        path.map do |segment|
+        route.map do |segment|
           {
             carrier: segment.airline,
             segment_number: segment.segment_number,
