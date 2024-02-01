@@ -1,4 +1,5 @@
 Найти все возможные маршруты
+
 Задача: https://gist.github.com/sanyco86/fcf5d047fe34fad981e8e0eb2021a031
 
 1. app/services/flight_searcher.rb - класс для поиска и форматирования
