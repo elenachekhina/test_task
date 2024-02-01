@@ -8,11 +8,11 @@
    ответ (пример):
    [
      {
-      origin_iata: "UUS"
-      destination_iata: "VVO"
-      departure_time: 01 Sep 05:45
-      arrival_time: 01 Sep 07:40
-       segments: [{
+      origin_iata: "UUS",
+      destination_iata: "VVO",
+      departure_time: 01 Sep 05:45,
+      arrival_time: 01 Sep 07:40,
+      segments: [{
          carrier: "S7",
          segment_number: "6224",
          origin_iata: "UUS",
