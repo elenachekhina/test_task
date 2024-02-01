@@ -10,7 +10,7 @@ RSpec.describe FlightSearcher, type: :service do
         origin_iata: 'UUS',
         destination_iata: 'DME',
         departure_from: '2024-01-01',
-        departure_to: '2024-01-02'
+        departure_to: '2024-01-04'
       }
     end
 
@@ -20,13 +20,11 @@ RSpec.describe FlightSearcher, type: :service do
     let!(:permitted_route) { create(:permitted_route) }
 
     context 'when only direct flights are available' do
-      let!(:segment) { create(:segment) }
+      let!(:segment_1) { create(:segment) }
+      let!(:segment_2) { create(:segment, sta: '2024-01-05'.to_datetime) }
 
-      it 'returns direct flight paths' do
-        expect(subject[0].slice(:departure_time, :arrival_time)).to eq({
-                                departure_time: '2024-01-01 05:20:00'.to_datetime,
-                                arrival_time: '2024-01-01 15:20:00'.to_datetime
-                              })
+      it 'returns direct flight path' do
+        expect(subject).to eq([[segment_1]])
       end
     end
 
@@ -42,11 +40,8 @@ RSpec.describe FlightSearcher, type: :service do
                            std: '2024-01-01 19:20:00'.to_datetime, sta: '2024-01-02 10:20:00'.to_datetime)
         end
 
-        it 'returns flight paths with connections' do
-          expect(subject[0].slice(:departure_time, :arrival_time)).to eq({
-                                  departure_time: '2024-01-01 05:20:00'.to_datetime,
-                                  arrival_time: '2024-01-02 10:20:00'.to_datetime
-                                })
+        it 'returns flight path with connections' do
+          expect(subject).to eq([[segment_1, segment_2]])
         end
       end
 
@@ -59,6 +54,48 @@ RSpec.describe FlightSearcher, type: :service do
         it 'returns empty list of flight paths' do
           expect(subject).to eq([])
         end
+      end
+    end
+
+    context 'when direct and flights with connections are available' do
+      let!(:segment_direct) do
+        create(:segment, origin_iata: 'UUS', destination_iata: 'DME',
+                         std: '2024-01-01 05:20:00'.to_datetime, sta: '2024-01-01 10:20:00'.to_datetime)
+      end
+      let!(:segment_1) do
+        create(:segment, origin_iata: 'UUS', destination_iata: 'OVB',
+                         std: '2024-01-01 05:20:00'.to_datetime, sta: '2024-01-01 10:20:00'.to_datetime)
+      end
+      let!(:segment_1_1) do
+        create(:segment, origin_iata: 'OVB', destination_iata: 'DME',
+                         std: '2024-01-01 18:20:00'.to_datetime, sta: '2024-01-01 20:20:00'.to_datetime)
+      end
+      let!(:segment_1_2) do
+        create(:segment, origin_iata: 'OVB', destination_iata: 'DME',
+                         std: '2024-01-01 19:20:00'.to_datetime, sta: '2024-01-01 21:20:00'.to_datetime)
+      end
+
+      it 'returns list with direct and flight with connection' do
+        expect(subject).to eq([[segment_direct], [segment_1, segment_1_1], [segment_1, segment_1_2]])
+      end
+    end
+
+    context 'when direct and flights with connections out of time' do
+      let!(:segment_direct_out_of_time) do
+        create(:segment, origin_iata: 'UUS', destination_iata: 'DME',
+                         std: '2024-01-05 05:20:00'.to_datetime, sta: '2024-01-05 10:20:00'.to_datetime)
+      end
+      let!(:segment_1) do
+        create(:segment, origin_iata: 'UUS', destination_iata: 'OVB',
+                         std: '2024-01-04 05:20:00'.to_datetime, sta: '2024-01-04 10:20:00'.to_datetime)
+      end
+      let!(:segment_1_2_out_of_time) do
+        create(:segment, origin_iata: 'OVB', destination_iata: 'DME',
+                         std: '2024-01-05 19:20:00'.to_datetime, sta: '2024-01-05 21:20:00'.to_datetime)
+      end
+
+      it 'returns empty list' do
+        expect(subject).to eq([])
       end
     end
   end
