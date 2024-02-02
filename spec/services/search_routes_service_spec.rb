@@ -3,24 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe SearchRoutesService, type: :service do
-  let(:flight_searcher) { instance_double(RouteSearcher) }
+  let(:route_searcher) { instance_double(RouteSearcher) }
   let(:route) { instance_double(Route) }
 
   before do
-    allow(RouteSearcher).to receive(:new).and_return(flight_searcher)
+    allow(RouteSearcher).to receive(:new).and_return(route_searcher)
     allow(route).to receive(:route_information_struct)
   end
 
   describe '#search' do
     context 'routes was found' do
       before do
-        allow(flight_searcher).to receive(:search).and_return([route])
+        allow(route_searcher).to receive(:search).and_return([route])
 
         SearchRoutesService.new.search({})
       end
 
       it 'call RouteSearcher.new.search' do
-        expect(flight_searcher).to have_received(:search)
+        expect(route_searcher).to have_received(:search)
       end
 
       it 'call RouteParser.new.route_information_struct' do
@@ -30,12 +30,12 @@ RSpec.describe SearchRoutesService, type: :service do
 
     context 'routes was not found' do
       before do
-        allow(flight_searcher).to receive(:search).and_return([])
+        allow(route_searcher).to receive(:search).and_return([])
 
         SearchRoutesService.new.search({})
       end
       it 'call RouteSearcher.new.search' do
-        expect(flight_searcher).to have_received(:search)
+        expect(route_searcher).to have_received(:search)
       end
 
       it 'not call RouteParser.new.route_information_struct' do
