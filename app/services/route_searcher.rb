@@ -64,7 +64,7 @@ class RouteSearcher
 
   def find_next(flight, iata_i, curr_route, routes, iatas, params)
     if flight.destination_iata == params[:destination_iata]
-      routes << Route.new(curr_route)
+      routes << Route.new(curr_route.dup)
     else
       flights = Segment.connected_flights(flight:, iata: iatas[iata_i] || params[:destination_iata],
                                           sta: params[:departure_to], min_connection_time: MIN_CONNECTION_TIME,
