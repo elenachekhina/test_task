@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FlightSearcher
+class RouteSearcher
   MIN_CONNECTION_TIME = 480
   MAX_CONNECTION_TIME = 2880
 
@@ -35,7 +35,7 @@ class FlightSearcher
       iata_to: params[:destination_iata],
       date_from: params[:departure_from],
       date_to: params[:departure_to]
-    ).map { |segment| [segment] }
+    ).map { |segment| Route.new([segment]) }
   end
 
   def find_flights_w_connections(params, options)
@@ -64,7 +64,7 @@ class FlightSearcher
 
   def find_next(flight, iata_i, curr_route, routes, iatas, params)
     if flight.destination_iata == params[:destination_iata]
-      routes << curr_route.dup
+      routes << Route.new(curr_route)
     else
       flights = Segment.connected_flights(flight:, iata: iatas[iata_i] || params[:destination_iata],
                                           sta: params[:departure_to], min_connection_time: MIN_CONNECTION_TIME,
