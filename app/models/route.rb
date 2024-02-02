@@ -26,10 +26,6 @@ class Route
     @segments.first.origin_iata
   end
 
-  def origin_iata
-    @segments.last.origin_iata
-  end
-
   def destination_iata
     @segments.last.destination_iata
   end

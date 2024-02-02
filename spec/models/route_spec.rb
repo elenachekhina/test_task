@@ -4,8 +4,11 @@ require 'rails_helper'
 
 RSpec.describe Segment, type: :class do
   describe '#route_information_struct' do
-    let(:segments) { create_list(:segment, 2) }
-    let(:route) { Route.new(segments) }
+    let(:segment_first) { create(:segment, origin_iata: 'FRA', destination_iata: 'PRG') }
+    let(:segment_last) { create(:segment, origin_iata: 'PRG', destination_iata: 'SVX') }
+    let(:segments) { [segment_first, segment_last] }
+
+    let(:route) { Route.new([segment_first, segment_last]) }
 
     it 'returns route in struct format' do
       expect(route.route_information_struct).to eq({
