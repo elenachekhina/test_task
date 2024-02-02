@@ -5,6 +5,6 @@ FactoryBot.define do
     carrier { 'S7' }
     origin_iata { 'UUS' }
     destination_iata { 'DME' }
-    transfer_iata_codes { ['OVB'] }
+    transfer_iata_codes { %w[OVB OVBNOZ] }
   end
 end
