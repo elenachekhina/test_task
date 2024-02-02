@@ -2,8 +2,11 @@
 
 Задача: https://gist.github.com/sanyco86/fcf5d047fe34fad981e8e0eb2021a031
 
-1. app/services/flight_searcher.rb - класс для поиска и форматирования
-   параметры на вход (пример):
+1. app/models/route.rb - класс маршрута, умеет себя форматировать и хранит в себе сегменты маршрута
+2. app/services/route_searcher.rb - класс для поиска маршрутов, возвращает массив маршрутов
+3. app/services/search_route_service.rb - класс для поиска и формирования ответа (в нем вызывается route_searcher)
+   
+   параметры на вход search_route_service (пример):
    {carrier: "S7", origin_iata: "UUS", destination_iata: "DME", departure_from: '2022-09-01', departure_to: '2022-09-10'}
 
    ответ (пример):
@@ -23,5 +26,7 @@
      }]
    ]
 
-2. spec/services/flight_sercher_spec.rb - тесты
+5. spec/models/route.rb - тесты
+6. spec/services/route_searcher_spec.rb - тесты
+7. spec/services/search_route_service_spec.rb - тесты
 
