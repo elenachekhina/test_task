@@ -4,7 +4,7 @@ class Route
   attr_reader :segments
 
   def initialize(segments)
-    @segments = segments.dup
+    @segments = segments
   end
 
   def route_information_struct
