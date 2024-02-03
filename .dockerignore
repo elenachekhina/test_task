@@ -11,7 +11,7 @@
 /config/credentials/*.key
 
 # Ignore all environment files.
-/.env*
+/.env.example
 !/.env.example
 
 # Ignore all logfiles and tempfiles.

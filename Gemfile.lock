@@ -95,12 +95,17 @@ GEM
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
     crass (1.0.6)
+    csv (3.2.8)
     date (3.3.4)
     debug (1.9.1)
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
     docile (1.4.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     drb (2.2.0)
       ruby2_keywords
     error_highlight (0.6.0)
@@ -280,7 +285,9 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   capybara
+  csv
   debug
+  dotenv-rails
   error_highlight (>= 0.4.0)
   factory_bot_rails
   importmap-rails

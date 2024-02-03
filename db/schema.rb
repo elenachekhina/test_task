@@ -21,9 +21,9 @@ ActiveRecord::Schema[7.1].define(version: 20_240_130_162_612) do
     t.string 'destination_iata', null: false
     t.boolean 'direct', default: true, null: false
     t.string 'origin_iata', null: false
-    t.string 'transfer_iata_codes', default: [], null: false, array: true
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+    t.string 'transfer_iata_codes', default: [], array: true
+    t.date 'created_at', default: '2024-01-30', null: false
+    t.date 'updated_at', default: '2024-01-30', null: false
   end
 
   create_table 'segments', force: :cascade do |t|
