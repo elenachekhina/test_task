@@ -30,3 +30,10 @@
 6. spec/services/route_searcher_spec.rb - тесты
 7. spec/services/search_route_service_spec.rb - тесты
 
+
+Чтобы запустить:
+
+1. Создать .env
+2. bin/rails db:create
+3. bin/rails db:migrate
+4. rake db:import
