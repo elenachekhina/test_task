@@ -7,7 +7,7 @@
 3. app/services/search_route_service.rb - класс для поиска и формирования ответа (в нем вызывается route_searcher)
    
    параметры на вход search_route_service (пример):
-   {carrier: "S7", origin_iata: "UUS", destination_iata: "DME", departure_from: '2022-09-01', departure_to: '2022-09-10'}
+   {carrier: "S7", origin_iata: "UUS", destination_iata: "DME", departure_from: '2024-01-01', departure_to: '2024-01-05'}
 
    ответ (пример):
    [
@@ -34,6 +34,6 @@
 Чтобы запустить:
 
 1. Создать .env
-2. bin/rails db:create
-3. bin/rails db:migrate
+2. bin/rails db:prepare
 4. rake db:import
+5. Проверить: SearchRoutesService.new.search({carrier: "S7", origin_iata: "UUS", destination_iata: "DME", departure_from: '2024-01-01', departure_to: '2024-01-05'})
